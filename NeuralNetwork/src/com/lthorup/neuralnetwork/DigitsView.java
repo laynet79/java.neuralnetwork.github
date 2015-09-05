@@ -191,7 +191,7 @@ public class DigitsView extends JPanel {
 		add(lblStatus);
 
 		// load default network (pre-trained)
-		URL url = getClass().getClassLoader().getResource("resources/test.nn");
+		URL url = getClass().getClassLoader().getResource("resources/default.nn");
 		File file = new File(url.getPath());
 		loadNetwork(file);
 		//nn = new NeuralNetwork(784, 100, 10);
