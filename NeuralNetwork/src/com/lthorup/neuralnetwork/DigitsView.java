@@ -1,7 +1,6 @@
 package com.lthorup.neuralnetwork;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+@SuppressWarnings("serial")
 public class DigitsView extends JPanel {
+	
 	private JProgressBar progressBar;
 	private JProgressBar accuracyBar;
 	private JTextField digit;
@@ -34,7 +35,6 @@ public class DigitsView extends JPanel {
 	private ImageSet testCases;
 	private ImageSet trainingSamples;
 	
-	private int currImage = 0;
 	private ImageView imageView;
 	private JTextField txtStatus;
 
@@ -50,8 +50,8 @@ public class DigitsView extends JPanel {
 				int sessionCnt = 20;
 				int batchSize = 10;
 				double learningRate = 3;
-				int testCaseCnt = 100;
-				nn.startTraining(testCases.getSamples(), sessionCnt, batchSize, learningRate, testCases.getSamples(), testCaseCnt);
+				int testCaseCnt = 200;
+				nn.startTraining(trainingSamples.getSamples(), sessionCnt, batchSize, learningRate, testCases.getSamples(), testCaseCnt);
 			}
 		});
 		btnTrainNetwork.setBounds(89, 168, 117, 29);
@@ -80,7 +80,6 @@ public class DigitsView extends JPanel {
 				BufferedImage img = new BufferedImage(imageView.getWidth(), imageView.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
 				imageView.print(img.getGraphics());
 				byte[] imageBytes = ((DataBufferByte) img.getData().getDataBuffer()).getData();
-				int size = imageBytes.length;
 				
 				double[][] data = new double[112][112];
 				int n = 0;
@@ -198,6 +197,7 @@ public class DigitsView extends JPanel {
 		
 		testCases = new ImageSet("test", "t10k-images.idx3-ubyte", "t10k-labels.idx1-ubyte");
 		//trainingSamples = new ImageSet("samples", "train-images.idx3-ubyte", "train-labels.idx1-ubyte");
+		trainingSamples = testCases;
 		
         Timer t = new Timer();
         t.scheduleAtFixedRate(new TimerTask() { public void run() { update(); } }, 0, 1000);
